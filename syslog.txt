@@ -1,0 +1,35 @@
+
+--------------------------
+---------sys log----------
+--------------------------
+istall
+apt-get install syslog
+-------------------
+configs
+-------------------
+
+/etc/rsyslog.conf
+
+------------------------------
+Lokális hálóról érkező üzenetek külön gyűjtése
+------------------------------
+if $fromhost-ip startswith '192.168' then /var/log/local-new.log
+------------------------------
+Csak a külön fájlban jelenjen meg az üzenet:
+------------------------------
+(az előzőt követő sorba)& ~
+
+
+-----------------------------------
+Log 4j config
+-----------------------------------
+# Root logger option
+log4j.rootLogger=debug, SYSLOG
+
+# Direct log messages to stdout
+log4j.appender.SYSLOG=org.apache.log4j.net.SyslogAppender
+log4j.appender.SYSLOG.syslogHost=192.168.0.19
+log4j.appender.SYSLOG.facilityPrinting=true
+log4j.appender.SYSLOG.layout=org.apache.log4j.PatternLayout
+log4j.appender.SYSLOG.layout.conversionPattern=%d{ISO8601} %-5p [%t] %c{2} %x - %m%n
+log4j.appender.SYSLOG.Facility=news
